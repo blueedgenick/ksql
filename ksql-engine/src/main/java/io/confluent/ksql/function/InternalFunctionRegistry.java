@@ -35,6 +35,7 @@ import io.confluent.ksql.function.udf.math.FloorKudf;
 import io.confluent.ksql.function.udf.math.RandomKudf;
 import io.confluent.ksql.function.udf.math.RoundKudf;
 import io.confluent.ksql.function.udf.string.ConcatKudf;
+import io.confluent.ksql.function.udf.string.ConcatWSKudf;
 import io.confluent.ksql.function.udf.string.IfNullKudf;
 import io.confluent.ksql.function.udf.string.LCaseKudf;
 import io.confluent.ksql.function.udf.string.LenKudf;
@@ -89,7 +90,6 @@ public class InternalFunctionRegistry implements FunctionRegistry {
     return udfFactory;
   }
 
-  @SuppressWarnings("unchecked")
   @Override
   public void addFunction(final KsqlFunction ksqlFunction) {
     addFunctionFactory(new UdfFactory(
@@ -190,6 +190,20 @@ public class InternalFunctionRegistry implements FunctionRegistry {
             Schema.OPTIONAL_STRING_SCHEMA),
         "CONCAT", ConcatKudf.class);
     addFunction(concat);
+
+    //TODO once we get proper varargs support, the inputs for this fn should be vararg<string>
+    KsqlFunction concatws = new KsqlFunction(Schema.OPTIONAL_STRING_SCHEMA,
+        Arrays.asList(Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA,
+            Schema.OPTIONAL_STRING_SCHEMA, Schema.OPTIONAL_STRING_SCHEMA),
+        "CONCAT_WS", ConcatWSKudf.class);
+    addFunction(concatws);
 
     KsqlFunction trim = new KsqlFunction(Schema.OPTIONAL_STRING_SCHEMA,
         Arrays.asList(Schema.OPTIONAL_STRING_SCHEMA),

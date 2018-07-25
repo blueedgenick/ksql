@@ -19,48 +19,48 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class RightKudfTest {
-  private final RightKudf udf = new RightKudf();
+public class LeftKudfTest {
+  private final LeftKudf udf = new LeftKudf();
 
   @Test
   public void happyPath() {
-    final String result = udf.right("hello world", 4);
-    assertThat(result, is("orld"));
+    final String result = udf.left("hello world", 4);
+    assertThat(result, is("hell"));
   }
 
   @Test
   public void shouldReturnNullForNullInput() {
-    final String result = udf.right(null, 4);
+    final String result = udf.left(null, 4);
     assertThat(result, is(nullValue()));
   }
 
   @Test
   public void shouldReturnNullForNullLength() {
-    final String result = udf.right("hello world", null);
+    final String result = udf.left("hello world", null);
     assertThat(result, is(nullValue()));
   }
 
   @Test
   public void shouldReturnEmptyForEmptyInput() {
-    final String result = udf.right("", 4);
+    final String result = udf.left("", 4);
     assertThat(result, is(""));
   }
 
   @Test
   public void shouldReturnWholeInputForExcessiveLength() {
-    final String result = udf.right("hello world", 100000);
+    final String result = udf.left("hello world", 100000);
     assertThat(result, is("hello world"));
   }
 
   @Test
   public void shouldReturnOriginalInputForNegativeLength() {
-    final String result = udf.right("hello world", -1);
+    final String result = udf.left("hello world", -1);
     assertThat(result, is("hello world"));
   }
   
   @Test
   public void shouldReturnEmptyStringForZeroLength() {
-    final String result = udf.right("hello world", 0);
+    final String result = udf.left("hello world", 0);
     assertThat(result, is(""));
   }
 

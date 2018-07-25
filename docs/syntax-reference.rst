@@ -1015,7 +1015,20 @@ Scalar functions
 +------------------------+------------------------------------------------------------+---------------------------------------------------+
 | LCASE                  |  ``LCASE(col1)``                                           | Convert a string to lowercase.                    |
 +------------------------+------------------------------------------------------------+---------------------------------------------------+
+| LEFT                   |  ``LEFT(string, length)``                                  | Return the leftmost ``length`` characters of the  |
+|                        |                                                            | input string unless either parameter is NULL in   |
+|                        |                                                            | which case NULL is returned.                      |
++------------------------+------------------------------------------------------------+---------------------------------------------------+
 | LEN                    |  ``LEN(col1)``                                             | The length of a string.                           |
++------------------------+------------------------------------------------------------+---------------------------------------------------+
+| LPAD                   |  ``LPAD(string, length, padding)``                         | Pads the input string, starting from the left,    |
+|                        |                                                            | with the specified ``padding`` text until the     |
+|                        |                                                            | target ``length`` is reached. If the input string |
+|                        |                                                            | is longer than the target length then it will be  |
+|                        |                                                            | truncated.                                        |
+|                        |                                                            | Return NULL if either the input or padding string |
+|                        |                                                            | are NULL, the padding string is empty (has zero   |
+|                        |                                                            | length), or the target legnth is negative.        |
 +------------------------+------------------------------------------------------------+---------------------------------------------------+
 | MASK                   |  ``MASK(col1, 'X', 'x', 'n', '-')``                        | Convert a string to a masked or obfuscated        |
 |                        |                                                            | version of itself. The optional arguments         |
@@ -1058,7 +1071,20 @@ Scalar functions
 +------------------------+------------------------------------------------------------+---------------------------------------------------+
 | RANDOM                 |  ``RANDOM()``                                              | Return a random DOUBLE value between 0.0 and 1.0. |
 +------------------------+------------------------------------------------------------+---------------------------------------------------+
+| RIGHT                  |  ``RIGHT(string, length)``                                 | Return the rightmost ``length`` characters of the |
+|                        |                                                            | input string unless either parameter is NULL in   |
+|                        |                                                            | which case NULL is returned.                      |
++------------------------+------------------------------------------------------------+---------------------------------------------------+
 | ROUND                  |  ``ROUND(col1)``                                           | Round a value to the nearest BIGINT value.        |
++------------------------+------------------------------------------------------------+---------------------------------------------------+
+| RPAD                   |  ``RPAD(string, length, padding)``                         | Pads the input string, starting from the right,   |
+|                        |                                                            | with the specified ``padding`` text until the     |
+|                        |                                                            | target ``length`` is reached. If the input string |
+|                        |                                                            | is longer than the target length then it will be  |
+|                        |                                                            | truncated.                                        |
+|                        |                                                            | Return NULL if either the input or padding string |
+|                        |                                                            | are NULL, the padding string is empty (has zero   |
+|                        |                                                            | length), or the target legnth is negative.        |
 +------------------------+------------------------------------------------------------+---------------------------------------------------+
 | STRINGTOTIMESTAMP      |  ``STRINGTOTIMESTAMP(col1, 'yyyy-MM-dd HH:mm:ss.SSS')``    | Converts a string value in the given              |
 |                        |                                                            | format into the BIGINT value                      |

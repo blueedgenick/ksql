@@ -18,19 +18,17 @@ import io.confluent.ksql.function.udf.Udf;
 import io.confluent.ksql.function.udf.UdfDescription;
 
 @UdfDescription(name = "right", author = "Confluent",
-    description = "Pads the input string, beginning from the left, with the specified padding"
-        + " string until the target length is reached. If the input string is longer than the"
-        + " specified target length it will be truncated. If the padding string is empty or"
-        + " NULL then NULL is returned.")
+    description = "Return the tightmost len chcarcters of the input string, or NULL if either"
+    + " parameter is NULL.")
 public class RightKudf {
 
   @Udf(description = "Returns .")
-  public String right(final String input, final int len) {
-    if (input == null) {
+  public String right(final String input, final Integer len) {
+    if (input == null || len == null) {
       return null;
     }
     if (len < 0) {
-      return null;
+      return input;
     }
     int charsToKeep = Math.min(input.length(), len);
     return input.substring(input.length() - charsToKeep);

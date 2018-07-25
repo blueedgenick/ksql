@@ -16,6 +16,7 @@
 
 package io.confluent.ksql.function.udf.string;
 
+import java.util.Arrays;
 import io.confluent.ksql.function.KsqlFunctionException;
 import io.confluent.ksql.function.udf.Kudf;
 
@@ -24,7 +25,10 @@ public class ConcatWSKudf implements Kudf {
   @Override
   public Object evaluate(Object... args) {
     if (args.length < 3) {
-      throw new KsqlFunctionException("concat_ws function needs at least two input arguments.");
+      throw new KsqlFunctionException("concat_ws function expects at least two input arguments.");
+    }
+    if (Arrays.asList(args).contains(null)) {
+      return null;
     }
     String separator = args[0].toString();
     StringBuilder outputBuf = new StringBuilder(args[1].toString());

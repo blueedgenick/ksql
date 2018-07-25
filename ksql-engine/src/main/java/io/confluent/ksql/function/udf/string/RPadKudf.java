@@ -29,7 +29,7 @@ public class RPadKudf {
     if (input == null) {
       return null;
     }
-    if (padding == null || padding.isEmpty()) {
+    if (padding == null || padding.isEmpty() || targetLen < 0) {
       return null;
     }
     StringBuilder sb = new StringBuilder(input);

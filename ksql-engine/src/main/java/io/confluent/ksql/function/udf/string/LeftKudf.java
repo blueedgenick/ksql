@@ -18,28 +18,19 @@ import io.confluent.ksql.function.udf.Udf;
 import io.confluent.ksql.function.udf.UdfDescription;
 
 @UdfDescription(name = "left", author = "Confluent",
-    description = "Pads the input string, beginning from the left, with the specified padding"
-        + " string until the target length is reached. If the input string is longer than the"
-        + " specified target length it will be truncated. If the padding string is empty or"
-        + " NULL then NULL is returned.")
+    description = "Return the leftmost len chcarcters of the input string, or NULL if either"
+    + " parameter is NULL.")
 public class LeftKudf {
 
-  @Udf(description = "Returns a left-padded version of the input string.")
-  public String lpad(final String input, final int len) {
-    if (input == null) {
+  @Udf(description = "See above.")
+  public String left(final String input, final Integer len) {
+    if (input == null || len == null) {
       return null;
     }
     if (len < 0) {
-      return null;
+      return input;
     }
-    StringBuilder sb = new StringBuilder(targetLen + padding.length());
-    int padUpTo = Math.max(targetLen - input.length(), 0);
-    for (int i = 0; i < padUpTo; i += padding.length()) {
-      sb.append(padding);
-    }
-    sb.setLength(padUpTo);
-    sb.append(input);
-    sb.setLength(targetLen);
-    return sb.toString();
+    int charsToKeep = Math.min(input.length(), len);
+    return input.substring(0, charsToKeep);
   }
 }

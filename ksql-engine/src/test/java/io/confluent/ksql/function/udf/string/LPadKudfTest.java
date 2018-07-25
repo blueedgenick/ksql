@@ -19,48 +19,54 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class RightKudfTest {
-  private final RightKudf udf = new RightKudf();
+public class LPadKudfTest {
+  private final LPadKudf udf = new LPadKudf();
 
   @Test
   public void happyPath() {
-    final String result = udf.right("hello world", 4);
-    assertThat(result, is("orld"));
+    final String result = udf.lpad("foo", 7, "bar");
+    assertThat(result, is("barbfoo"));
   }
 
   @Test
   public void shouldReturnNullForNullInput() {
-    final String result = udf.right(null, 4);
+    final String result = udf.lpad(null, 4, "foo");
     assertThat(result, is(nullValue()));
   }
 
   @Test
-  public void shouldReturnNullForNullLength() {
-    final String result = udf.right("hello world", null);
+  public void shouldReturnNullForNullPadding() {
+    final String result = udf.lpad("foo", 4, null);
     assertThat(result, is(nullValue()));
   }
 
   @Test
-  public void shouldReturnEmptyForEmptyInput() {
-    final String result = udf.right("", 4);
-    assertThat(result, is(""));
+  public void shouldReturnNullForEmptyPadding() {
+    final String result = udf.lpad("foo", 4, "");
+    assertThat(result, is(nullValue()));
   }
 
   @Test
-  public void shouldReturnWholeInputForExcessiveLength() {
-    final String result = udf.right("hello world", 100000);
-    assertThat(result, is("hello world"));
+  public void shouldPadEmptyInput() {
+    final String result = udf.lpad("", 4, "foo");
+    assertThat(result, is("foof"));
   }
 
   @Test
-  public void shouldReturnOriginalInputForNegativeLength() {
-    final String result = udf.right("hello world", -1);
-    assertThat(result, is("hello world"));
+  public void shouldTruncateInputIfTargetLengthTooSmall() {
+    final String result = udf.lpad("foo", 2, "bar");
+    assertThat(result, is("fo"));
+  }
+
+  @Test
+  public void shouldReturnNullForNegativeLength() {
+    final String result = udf.lpad("foo", -1, "bar");
+    assertThat(result, is(nullValue()));
   }
   
   @Test
   public void shouldReturnEmptyStringForZeroLength() {
-    final String result = udf.right("hello world", 0);
+    final String result = udf.lpad("foo", 0, "bar");
     assertThat(result, is(""));
   }
 
